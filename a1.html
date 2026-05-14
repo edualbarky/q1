@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة أوراق عمل أ. محمد البارقي</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: #eef2f3;
+            background: linear-gradient(to right, #eef2f3, #8e9eab);
+            min-height: 100vh;
+        }
+
+        .a4-page {
+            width: 210mm;
+            height: 297mm;
+            padding: 8mm;
+            margin: 20px auto;
+            background: white;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 0;
+            }
+            .no-print { display: none !important; }
+            body { background: white; margin: 0; padding: 0; }
+            .a4-page {
+                margin: 0 !important;
+                box-shadow: none !important;
+                border: none !important;
+                width: 210mm;
+                height: 297mm;
+                padding: 10mm !important;
+                page-break-after: always;
+            }
+        }
+
+        .worksheet-border {
+            border: 3px double #10b981;
+            height: 100%;
+            padding: 15px;
+            border-radius: 8px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+        }
+
+        .question-box {
+            background: #fdfdfd;
+            border-right: 4px solid #10b981;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 12px;
+            page-break-inside: avoid;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        .checkbox-circle {
+            width: 14px;
+            height: 14px;
+            border: 2px solid #10b981;
+            border-radius: 50%;
+        }
+
+        .main-gradient {
+            background: linear-gradient(135deg, #065f46 0%, #10b981 100%);
+        }
+    </style>
+</head>
+<body class="text-slate-800">
+
+    <nav class="no-print main-gradient text-white p-4 sticky top-0 z-50 shadow-2xl">
+        <div class="max-w-6xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="bg-white/20 p-2 rounded-2xl backdrop-blur-sm border border-white/30">
+                    <svg class="w-8 h-8 text-yellow-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-xl font-black tracking-tight">منصة المهارات الرقمية الممتعة</h1>
+                    <p class="text-xs font-bold text-emerald-100">أ. محمد البارقي • مدرسة ابن ماجة</p>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-center gap-3">
+                <div class="flex gap-2 bg-black/10 p-2 rounded-xl">
+                    <select id="gradeSelect" onchange="updateLessons()" class="bg-white text-emerald-900 rounded-lg px-3 py-1.5 text-sm font-bold outline-none">
+                        <option value="5">الصف الخامس</option>
+                        <option value="6">الصف السادس</option>
+                    </select>
+                    <select id="termSelect" onchange="updateLessons()" class="bg-white text-emerald-900 rounded-lg px-3 py-1.5 text-sm font-bold outline-none">
+                        <option value="1">الفصل الأول</option>
+                        <option value="2">الفصل الثاني</option>
+                    </select>
+                </div>
+                
+                <select id="lessonSelect" onchange="renderWorksheet()" class="bg-white text-emerald-900 rounded-lg px-3 py-1.5 text-sm font-bold outline-none w-56 border-2 border-yellow-400">
+                </select>
+
+                <button onclick="window.print()" class="bg-yellow-400 hover:bg-yellow-500 text-emerald-900 font-black px-6 py-2 rounded-xl shadow-lg transition-all active:scale-95 flex items-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                    طباعة الورقة
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div id="worksheet-container" class="py-6">
+        <div class="a4-page mx-auto">
+            <div class="worksheet-border">
+                
+                <div class="flex justify-between items-start mb-4 pb-2 border-b border-emerald-100">
+                    <div class="text-right space-y-0.5 text-[11px] font-bold text-emerald-800">
+                        <p>المملكة العربية السعودية</p>
+                        <p>وزارة التعليم</p>
+                        <p>مدرسة ابن ماجة</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="bg-emerald-600 text-white px-6 py-0.5 rounded-full text-md font-black shadow-sm mb-1">ورقة عمل مهارات رقمية</div>
+                        <p id="lessonTitleDisplay" class="text-emerald-700 font-bold text-xs">اسم الدرس</p>
+                    </div>
+                    <div class="text-left space-y-0.5 text-[11px] font-bold text-emerald-800">
+                        <p>الصف: <span id="gradeLabel">الخامس</span></p>
+                        <p>الفصل: <span id="termLabel">الأول</span></p>
+                        <p>التاريخ: .... / .... / ١٤٤٦هـ</p>
+                    </div>
+                </div>
+
+                <div class="bg-emerald-50/50 p-2 rounded-lg border border-emerald-100 flex justify-between items-center mb-4">
+                    <div class="flex-grow font-bold text-xs text-emerald-900">
+                        اسم البطل: ............................................................................................
+                    </div>
+                    <div class="font-bold text-xs text-emerald-900 mr-4">
+                        الفصل: <span id="classShortLabel">٥</span> / ........
+                    </div>
+                    <div class="border border-emerald-600 rounded px-2 py-0.5 mr-4 bg-white font-black text-xs">
+                        الدرجة: ١٠ / ....
+                    </div>
+                </div>
+
+                <div id="questionsArea" class="space-y-3 flex-grow overflow-hidden">
+                    <!-- Loaded dynamically -->
+                </div>
+
+                <div class="mt-4 flex justify-between items-end border-t border-emerald-50 pt-2">
+                    <div class="text-[9px] text-slate-400 font-bold italic">
+                        الحاسب نافذتك نحو المستقبل الذكي 💻✨
+                    </div>
+                    <div class="text-center">
+                        <p class="text-emerald-800 font-black text-[12px] mb-0.5">مع تمنياتي لكم بالتفوق</p>
+                        <div class="bg-emerald-900 text-white px-4 py-0.5 rounded-full text-[10px] font-bold">معلم المادة: أ. محمد البارقي</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const lessonsData = {
+            "5": {
+                "1": [
+                    {
+                        title: "أجهزة الحاسب (المكونات والأنواع)",
+                        questions: [
+                            { type: "mcq", q: "يعتبر الفأرة ولوحة المفاتيح من أجهزة:", options: ["الإخراج", "الإدخال", "المعالجة", "التخزين"] },
+                            { type: "tf", q: "صندوق الحاسب يحوي داخله الأجزاء الرئيسية مثل اللوحة الأم." },
+                            { type: "mcq", q: "العقل المدبر للحاسب الذي ينفذ العمليات هو:", options: ["الشاشة", "الطابعة", "المعالج CPU", "السماعات"] },
+                            { type: "essay", q: "اذكر فرقاً واحداً بين الحاسب المحمول والحاسب المكتبي؟" }
+                        ]
+                    },
+                    {
+                        title: "التعامل مع النصوص (تنسيق الفقرات)",
+                        questions: [
+                            { type: "tf", q: "نستخدم مفتاح (Delete) لمسح الحرف الموجود خلف المؤشر." },
+                            { type: "mcq", q: "لجعل النص عريضاً (ثميناً) في وورد نستخدم الأيقونة:", options: ["I", "U", "B", "A"] },
+                            { type: "tf", q: "يمكننا تغيير اتجاه النص من اليمين لليسار باستخدام أوامر المحاذاة." },
+                            { type: "essay", q: "لماذا نستخدم الصور والجداول في ملفات النصوص؟" }
+                        ]
+                    }
+                ],
+                "2": [
+                    {
+                        title: "جداول البيانات (مقدمة في إكسل)",
+                        questions: [
+                            { type: "mcq", q: "التقاء العمود مع الصف في برنامج إكسل ينتج عنه:", options: ["جدول", "خلية", "صفحة", "كتاب"] },
+                            { type: "tf", q: "تبدأ أي عملية حسابية في الإكسل بعلامة (=)." },
+                            { type: "mcq", q: "لجمع قيمتين نستخدم العلامة الرياضية:", options: ["*", "-", "/", "+"] }
+                        ]
+                    },
+                    {
+                        title: "البرمجة في سكراتش (الأحداث والحركة)",
+                        questions: [
+                            { type: "mcq", q: "اللبنة المسؤولة عن بدء البرنامج عند النقر على العلم الأخضر هي:", options: ["لبنة الحركة", "لبنة الأحداث", "لبنة الصوت", "لبنة التحسس"] },
+                            { type: "tf", q: "يمكننا تغيير مظهر الكائن من خلال تبويب (المظاهر)." },
+                            { type: "essay", q: "اشرح ماذا تفعل لبنة (استدر ١٥ درجة)؟" }
+                        ]
+                    }
+                ]
+            },
+            "6": {
+                "1": [
+                    {
+                        title: "التصميم ثلاثي الأبعاد (Tinkercad)",
+                        questions: [
+                            { type: "mcq", q: "المحور الذي يمثل الارتفاع في التصميم هو المحور:", options: ["X", "Y", "Z", "W"] },
+                            { type: "tf", q: "يمكننا تحويل أي شكل صلب إلى (فجوة) في تينكركاد." },
+                            { type: "mcq", q: "أمر (Group) يستخدم لـ:", options: ["تلوين الأشكال", "حذف الأشكال", "دمج الأشكال معاً", "تغيير الحجم"] }
+                        ]
+                    },
+                    {
+                        title: "قواعد البيانات (مفاهيم أساسية)",
+                        questions: [
+                            { type: "mcq", q: "المكان الذي يجمع فيه البيانات حول شخص واحد يسمى:", options: ["حقل", "سجل", "جدول", "ملف"] },
+                            { type: "tf", q: "نظام (نور) هو مثال على قاعدة بيانات تعليمية." },
+                            { type: "essay", q: "لماذا يفضل استخدام قواعد البيانات بدلاً من الورق؟" }
+                        ]
+                    }
+                ],
+                "2": [
+                    {
+                        title: "إنتاج ومونتاج الفيديو",
+                        questions: [
+                            { type: "mcq", q: "المنطقة التي يتم فيها ترتيب المشاهد تسمى:", options: ["المعرض", "الجدول الزمني Timeline", "سلة المحذوفات", "الإعدادات"] },
+                            { type: "tf", q: "تستخدم (الانتقالات) لتحسين شكل التحرك بين مقطع وآخر." },
+                            { type: "essay", q: "ما هي أول خطوة يجب فعلها قبل البدء في تصوير فيديو؟" }
+                        ]
+                    },
+                    {
+                        title: "البرمجة المتقدمة (اللبنات الشرطية)",
+                        questions: [
+                            { type: "mcq", q: "اللبنة التي تنفذ الأوامر فقط في حال تحقق شرط معين هي:", options: ["كرر", "انتظر", "إذا .. فـ", "تحرك"] },
+                            { type: "tf", q: "المتغيرات تستخدم لحفظ قيم مثل (النتيجة) أو (الزمن)." },
+                            { type: "mcq", q: "توجد لبنات العمليات الحسابية والمنطقية في قسم لونها:", options: ["أزرق", "أخضر", "أصفر", "برتقالي"] }
+                        ]
+                    }
+                ]
+            }
+        };
+
+        function updateLessons() {
+            const grade = document.getElementById('gradeSelect').value;
+            const term = document.getElementById('termSelect').value;
+            const lessonSelect = document.getElementById('lessonSelect');
+            
+            lessonSelect.innerHTML = '';
+            const list = lessonsData[grade][term] || [];
+            
+            list.forEach((lesson, index) => {
+                const opt = document.createElement('option');
+                opt.value = index;
+                opt.textContent = lesson.title;
+                lessonSelect.appendChild(opt);
+            });
+
+            document.getElementById('gradeLabel').textContent = grade === "5" ? "الخامس الابتدائي" : "السادس الابتدائي";
+            document.getElementById('termLabel').textContent = term === "1" ? "الأول" : "الثاني";
+            document.getElementById('classShortLabel').textContent = grade;
+            
+            renderWorksheet();
+        }
+
+        function renderWorksheet() {
+            const grade = document.getElementById('gradeSelect').value;
+            const term = document.getElementById('termSelect').value;
+            const lessonIndex = document.getElementById('lessonSelect').value;
+            
+            if (!lessonsData[grade][term][lessonIndex]) return;
+            
+            const content = lessonsData[grade][term][lessonIndex];
+            document.getElementById('lessonTitleDisplay').textContent = content.title;
+            const area = document.getElementById('questionsArea');
+            area.innerHTML = '';
+
+            content.questions.forEach((item, i) => {
+                const card = document.createElement('div');
+                card.className = 'question-box';
+                
+                let qHtml = `<div class="flex items-start gap-2 mb-1.5">
+                    <span class="bg-emerald-600 text-white w-5 h-5 rounded flex items-center justify-center text-[10px] font-bold mt-0.5">س ${i+1}</span>
+                    <p class="font-bold text-emerald-900 text-[14px] leading-tight">${item.q}</p>
+                </div>`;
+
+                if (item.type === "mcq") {
+                    qHtml += `<div class="grid grid-cols-2 gap-x-8 pr-7">`;
+                    item.options.forEach(opt => {
+                        qHtml += `<div class="option-item">
+                            <span class="checkbox-circle"></span>
+                            <span class="font-medium">${opt}</span>
+                        </div>`;
+                    });
+                    qHtml += `</div>`;
+                } else if (item.type === "tf") {
+                    qHtml += `<div class="flex gap-10 pr-7 mt-1 text-[13px] font-black">
+                        <div class="flex items-center gap-1.5"> <div class="w-8 h-4 border-2 border-emerald-600 rounded"></div> صح </div>
+                        <div class="flex items-center gap-1.5"> <div class="w-8 h-4 border-2 border-emerald-600 rounded"></div> خطأ </div>
+                    </div>`;
+                } else if (item.type === "essay") {
+                    qHtml += `<div class="pr-7 space-y-3 mt-1">
+                        <div class="border-b border-dashed border-emerald-200 h-5"></div>
+                        <div class="border-b border-dashed border-emerald-200 h-5"></div>
+                    </div>`;
+                }
+
+                card.innerHTML = qHtml;
+                area.appendChild(card);
+            });
+        }
+
+        window.onload = updateLessons;
+    </script>
+</body>
+</html>
