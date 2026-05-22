@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شواهد الأداء الوظيفي 1447هـ | أ. شريفة البارقي</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #ec4899, #f43f5e);
+            --secondary-gradient: linear-gradient(135deg, #fbcfe8, #f472b6);
+            --accent-color: #fb7185;
+            --bg-color: #fff1f2;
+            --card-bg: #ffffff;
+            --text-main: #4c0519;
+            --text-muted: #9f1239;
+            --hover-pink: #fce7f3;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding-bottom: 40px;
+        }
+
+        /* الهيدر الرئيسي للملف بالتدرج الوردي المودرن */
+        header {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            border-bottom-left-radius: 50px;
+            border-bottom-right-radius: 50px;
+            box-shadow: 0 10px 25px rgba(236, 72, 153, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.15) 10%, transparent 40%);
+            animation: rotateBg 25s linear infinite;
+        }
+
+        @keyframes rotateBg {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            font-weight: 900;
+            margin-bottom: 12px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.15);
+        }
+
+        header p {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            font-weight: 500;
+        }
+
+        .badge {
+            background-color: white;
+            color: #e11d48;
+            padding: 6px 20px;
+            border-radius: 25px;
+            font-weight: 800;
+            display: inline-block;
+            margin-top: 18px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        /* حاوية المحتوى الرئيسي */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        /* شبكة التصنيفات المعيارية */
+        .grid-sections {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 35px;
+        }
+
+        /* ستايل كرت المعيار */
+        .section-card {
+            background-color: var(--card-bg);
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(236, 72, 153, 0.05);
+            border-right: 8px solid #f43f5e;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(236, 72, 153, 0.12);
+        }
+
+        .section-title {
+            font-size: 1.45rem;
+            color: #be123c;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 2px solid #ffe4e6;
+            padding-bottom: 15px;
+        }
+
+        .section-title i {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1.8rem;
+        }
+
+        /* شبكة الروابط داخل القسم */
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+            gap: 18px;
+        }
+
+        /* تصميم كرت الشاهد/الملف المرفق */
+        .doc-link {
+            display: flex;
+            align-items: center;
+            background-color: #fff5f5;
+            padding: 16px;
+            border-radius: 16px;
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 500;
+            border: 1px solid #ffe4e6;
+            transition: all 0.25s ease;
+        }
+
+        .doc-link:hover {
+            background: var(--primary-gradient);
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 8px 20px rgba(236, 72, 153, 0.2);
+        }
+
+        .doc-link i.file-icon {
+            font-size: 1.6rem;
+            margin-left: 14px;
+            color: #e11d48; 
+            transition: color 0.25s ease;
+        }
+
+        .doc-link:hover i.file-icon {
+            color: white;
+        }
+
+        .doc-link .link-text {
+            flex-grow: 1;
+            font-size: 0.95rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding-left: 10px;
+        }
+
+        .doc-link i.arrow-icon {
+            font-size: 0.85rem;
+            opacity: 0.4;
+            transition: transform 0.25s ease, color 0.25s ease;
+        }
+
+        .doc-link:hover i.arrow-icon {
+            opacity: 1;
+            color: white;
+            transform: translateX(-5px);
+        }
+
+        /* تصميم حالة عدم وجود شواهد بعد */
+        .empty-section {
+            color: var(--text-muted);
+            background-color: #fff1f2;
+            padding: 20px;
+            border-radius: 14px;
+            border: 1px dashed #fda4af;
+            font-style: italic;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .empty-section i {
+            font-size: 1.2rem;
+            color: #f43f5e;
+        }
+
+        /* الفوتر */
+        footer {
+            text-align: center;
+            padding: 35px;
+            margin-top: 60px;
+            background: var(--primary-gradient);
+            color: white;
+            font-size: 1rem;
+            border-top-left-radius: 30px;
+            border-top-right-radius: 30px;
+            box-shadow: 0 -5px 20px rgba(236, 72, 153, 0.15);
+        }
+
+        /* متجاوب مع الجوالات */
+        @media (max-width: 768px) {
+            header { padding: 40px 15px; border-radius: 0 0 30px 30px; }
+            header h1 { font-size: 1.9rem; }
+            header p { font-size: 1.1rem; }
+            .container { margin: 20px auto; }
+            .section-card { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <h1>شريفة محمد مرعي البارقي</h1>
+            <p>الملف الإلكتروني لشواهد الأداء الوظيفي</p>
+            <span class="badge">العام الدراسي 1447 هـ 💯 SH</span>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="grid-sections">
+
+            <div class="section-card">
+                <h2 class="section-title"><i class="fa-solid fa-briefcase"></i> اداء الواجبات الوظيفيه</h2>
+                <div class="links-grid">
+                    <a href="https://drive.google.com/open?id=1u0gWlN0PNvs8ja2fgjaBoKlQh_nqgR9t" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">تقرير تنفيذ إذاعة مدرسية</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1vBiArQykZwd3vZabp7abJ9Kc3-anfHtS" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">خطة مراعاة المرحلة العمرية ثانوي والأساليب التربوية</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=19_8OshxM6bvIkJNEMz8qISjFYOYhQle7" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">توزيع المنهج الفصل الدراسي الثاني</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1q42v9Q_u1HtYSDVkZlrmv7td-TgzQOjR" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">خطة التعلم الفصل الاول</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1xXdV-0Spp-vUhoKBU07fJ8zb5VT3fEOB" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">مبادرات على مستوى المدرسة تقرير مبادرة المصلى</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1_UdlRGbaLR8Ru3qwX5Fd6MTCYwbByQJg" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">تقرير تنفيذ مبادرة انجليزي بي دي ف</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1_q9tNYqEklOA7qogkKgV2ncrofnTHwB1" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">تقرير تفعيل منصة مدرستي ENGLISH (1)</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1SiNRIrYIgZhclDurS-aOo8QGYDzh19vc" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">تقرير تنفيذ حصة إنتظار</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1B5sqJ17aleXpeIKUfuYZ18ePic6h8g7n" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">توثيق الاحتفاء باليوم الوطني</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=15jBZCQIBjV73me35fkm2ODdmXX1aqDK4" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">تقرير برنامج نشاط اسبوعي [1]</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1a-4mWr193ANOSsmWYwMYWXIDQMRwqIng" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">توزيع المنهج الفصل الدراسي الاول</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1jXtPQpfaB92CUav1YlUxj_cxHeDHWerk" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">خطة الترم كامل اللغة الإنجليزية الفصل الدراسي الثاني 3</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <h2 class="section-title"><i class="fa-solid fa-users-gear"></i> التفاعل مع المجتمع المهني</h2>
+                <div class="links-grid">
+                    <a href="https://drive.google.com/open?id=1FRa8AIfgs0FOu3Rk2xAnfNApj36DDIAo" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">شهادة مؤتمر دمج الذكاء الاصطناعي بالتعليم</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1A2VDAI4c785FIC6YCWl7sklRym_sx7WR" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">دورة مفاهيم الذكاء الاصطناعي</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1ihHZg_vozMUuav1RPQ-zJPnDLk0A1-3p" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">شهادة حضور</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1o4Nu8i4GUDy-sI0kkY4PbvLJE9KFjLU5" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">خطة التطوير الفردية لعام 1447</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1DVW3rwBb40ZA5iq_sjPMtG2CYkydcCWZ" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">شهادة الأمن السيبراني _ منصة أبعاد</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=13XEa2jUUk4qumCAe73_4azAwFlysJ4Q8" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">شهادة القيم الاسلامية _ المعهد الوطني</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1KO2a8b_-IVuPur_L6QMPd_OokutfCQqB" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">شهادة NIEPD prg1-2 المعهد الوطني</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1ow5x2CUEgWSqIffmF3C2vVMqSuwrXRu0" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">المنجز الالكتروني بمحافظة جدة</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1GmCRCBodVAH8quuswbdqJwmKcmH23gMF" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">شهادة إدارة المخاطر _ منصة أبعاد</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1RttMjOA6vJZ3LFqRBIvfzXn525Owc110" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">زيارة تبادلية</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1C3ini9eFK3PYHEWLPMfKMlE89iLbMqts" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">شهادة شريفة محمد مرعي البارقي</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1EyfgkzYEAZA9SUuuDwuzT11_BpVyNCY8" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">دورة مبادئ الذكاء الاصطناعي</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1rZfZ554-ZVDBx545ZMAasgjNXsrhYq7-" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">شهادات حضور دورة المدرسه</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1pNvPw6s0qgFdTfNjcBnNKXolus1EDo3I" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">سياسة حوكمة البيانات</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1jVf8l3VYJ0N1re2Aw9_dcbBHffq_ieaD" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">جلسات تعلم مهنية التخصص</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1XdJua8xXJ1PhGq2Qky80QTkcNtPhQvX8" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">إدارة الاداء الوظيفي _ منصة أبعاد</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1NqivivLW-_LQ-yGniEju4ANkTUaCnFL3" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">الزيارة التبادلية</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1l7PGx3o-YD4CuD_YTzxp2NbRxAh1bMjV" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">تقرير جلسات مجتمعات التعلم المهنية</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1GfdOlKVP2Gooa3J0OPsUrFKjNAEQXpK7" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">الفئة المستهدفة (التخصص)</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1IUY_4v0LXsNnvcHvAKjY8ZbWr-56Dxx5" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">مجتمع مهني للفصل الدراسي الثاني</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1ZI_Iq_gA1nUlUoO3taI8hGkrtNeDCFFK" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">قسم اللغه الانجليزيه</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1tdu5tQxvTiDjN2JCAY8CbH94xcI0sPv6" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">ملف مجتمع مهني</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1xT91JLhBNkcO-ILqgSg3RUSNwY5KDD9M" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">جلسات التعلم مهنية</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <h2 class="section-title"><i class="fa-solid fa-comments"></i> التفاعل مع اولياء الامور</h2>
+                <div class="links-grid">
+                    <a href="https://drive.google.com/open?id=1n3rbEpT2yGCATQzERWo_nS5rJdA8r5Zi" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">تواصل مع ولية امر</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1ggyjQzExyDTCkM3I7gKtryIxZLuTyqv8" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">الاجتماع الأول للأمهات الفصل الثاني</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1nL5r8ZIU5tpTqBujUscj_jMGhBVIPKjP" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">ملف تواصل مع أولياء الأمور 1</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1tEko84dTR-e64Pdm-2b5lo-nVNtaMP3G" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">حضور برنامج التسامح</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=15nCxMqfey7SBl58wh19OtzfROXeTwXkv" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">اشعار ولي الامر من منصة مدرستي</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1f1kxujYYhkEa_7BBN4yxQ6oUaYHFaIEg" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">اجتماع الامهات عن بعد</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <h2 class="section-title"><i class="fa-solid fa-chess"></i> التنوع في استراتيجيات التعليم</h2>
+                <div class="links-grid">
+                    <a href="https://drive.google.com/open?id=1650UsdqKLUK_GHcjSK-xeMOvWKF3TzGY" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">تقرير استراتيجية التعلم المبني على اللعب</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=10-YTukWUvXWwHie8jVPAYwiwWU4pyip4" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">ملف الفهم القرائي</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <h2 class="section-title"><i class="fa-solid fa-chart-line"></i> تحسين نتائج المتعلمين</h2>
+                <div class="links-grid">
+                    <a href="https://drive.google.com/open?id=1Cbwfl52AYeJuepXFNszZ7ZOpEr7VQnro" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">تقرير التدريب على اختبار STEP</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1fI5bqrMWdT-ezy_j6iqOWCsJ-vXnHOXm" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">تقرير تدريب اختبار STEP الثاني</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1mHtnAc4SRLHHL0DL4guFpHaoFFHIrBfy" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">تحليل الاختبار التشخيصي 11</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1-RhDKSOT0LsZBk2jRvaMPTOc8y1dU0qA" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">خطة علاجية لمستوى الطلاب التحصيلي (الفصل الأول)</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1fk37OyTJ5bSxsbJ_oW5_3icttz7YPFkz" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">تحليل نتائج الفصل الدراسي الاول</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1t80OSVelOe5jCUS5S_4P2mo3iSo1O5xl" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">تقرير برنامج تدريب وقياس أثر STEP</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1f0qyr3RwxEY0DJ_XseH8bsld_y8-wChQ" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">ملف انجاز الطالبات باركود</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1CksWcM5uWGehYcfCoDCsDZb5mvPEJEhz" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">نسخة من ملف انجاز الطالبات باركود</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1zjqdiWRDY_JkEIF_iuWsGZH0Tgzbm3Va" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">شهادة الطالبة عائشة (Certificate)</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1uJXLrCZ_fSVKipJyqHQnxffXaWfzg5sp" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">نموذج خطة علاجية للغة الانجليزية 1447</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1QI1Uci5LzVk-xEbgyJnOz6VVAFuvIIwr" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">تحليل فصول 1 و2 و3 و4 معا (الفترة الاولى)</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <h2 class="section-title"><i class="fa-solid fa-pen-to-square"></i> اعداد وتنفيذ خطة التعلم</h2>
+                <div class="links-grid">
+                    <a href="https://drive.google.com/open?id=1MzLoVx6PFY1s5fFwAjW2Y75bQf8FZuze" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">توزيع المنهج الفصل الدراسي الثاني</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1cJFx5--5gtPfKqlJ24BgHgwGHLTtnKZS" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">توزيع المنهج الفصل الدراسي الاول</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1D6HJSkN9btu8YrRsQmC6O68AJk9MdNNW" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">خطة درس PDF</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1bKbB88aLx06hxw5aiu2-CxrQaqVEXHfV" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">تقرير برنامج نشاط اسبوعي [1]</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1rIMaZJSsZ4qNm7utjJjrkbDq0oyqrI9R" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">خطة التعلم الفصل الاول</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1tdyqUzmpS3YbbZ1GCjNLwkFJIflPlxnh" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">نموذج خطة اثرائية للغة الانجليزية 1447</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1VDIaQIrB51wJejR8dSTFxAYgmm1OeuvR" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">نموذج خطة علاجية للغة الانجليزية 1447</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1AeDqX1OmNNIvE0U05zr3xa_aWCGNAg6b" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">خطة الترم كامل لغة إنجليزية الفصل الثاني</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=12WDVgJnBZPs-caDPKf1lI30Q8TARlfkn" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">تقرير برنامج نشاط اسبوعي [2]</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1_goBMCLvNYehf7jJN_9idobhi96hFnCY" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">الخطة الإجرائية للمهارات الاساسية</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <h2 class="section-title"><i class="fa-solid fa-laptop-code"></i> توظيف تقنيات ووسائل التعلم المناسبة</h2>
+                <div class="links-grid">
+                    <a href="https://drive.google.com/open?id=1HbMRrcBEH9pogBMg3JtJE7oVpDfDDnFy" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">تقرير تفعيل منصة مدرستي ENGLISH</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1yzVPJSLj7251-d28pcORRowpltfjAOp_" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">تقرير برنامج تقني بادليت Padlet</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1m7M9Qreti7p_wq8VwWtZ4wLjftWYda19" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">تقرير استخدام التقنية في التعليم</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <h2 class="section-title"><i class="fa-solid fa-wand-magic-sparkles"></i> تهيئة البيئة التعليمية</h2>
+                <div class="links-grid">
+                    <a href="https://drive.google.com/open?id=1YY1-GY6K9U7tGQe72pdW5Vb-ECnIjqb2" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">تقرير أنماط التعلم - ثالث 3</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1Zc2gsc6AgkBeUadF3GqWcwvtwtZMQJsi" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">تقرير أنماط التعلم - ثالث 2</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1em0adDOkOXdITzMe4xrUL9CESAkjqNnx" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">توثيق تكريم الطالبات المتميزات</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1VoGiwYjEprqGrucQDtts9SFwd61EbV9e" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">تقرير أنماط التعلم - ثالث 1</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1N8Z8mSSQ-5JG8khI3prGjWV4akSiBgx1" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">تقرير أنماط التعلم - ثالث 4</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <h2 class="section-title"><i class="fa-solid fa-people-roof"></i> الادارة الصفيه</h2>
+                <div class="empty-section">
+                    <i class="fa-solid fa-circle-info"></i> لا توجد ملفات مرفقة حالياً في هذا القسم.
+                </div>
+            </div>
+
+            <div class="section-card">
+                <h2 class="section-title"><i class="fa-solid fa-magnifying-glass-chart"></i> تحليل نتائج المتعلمين</h2>
+                <div class="links-grid">
+                    <a href="https://drive.google.com/open?id=1blsWLskUkd1GcFDLANiSdw-cQcJQS0LQ" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">تحليل الاختبار التشخيصي 11</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1UI9DbtHq9WzoUPm-DJ6DxqOHIqTO8zH7" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">تحليل فصول 1 و2 و3 و4 معا (الفترة الاولى)</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1BcfWhUTd4UI95B5Eh4pn9mUtaEBLiy-m" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">نموذج خطة اثرائية للغة الانجليزية 1447</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1ra6mDSZkdkxnggbE90FcJalCOIBM4DSh" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">نموذج خطة علاجية للغة الانجليزية 1447</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=1-ZDfYfARjIPGGJ5C6OPmd2fqpq7m49WE" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">تحليل نتائج الفصل الدراسي الاول</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                    <a href="https://drive.google.com/open?id=18SlfaCnT-VWPmRF224C-ggeefDtRjuOi" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">خطة علاجية لمستوى الطلاب التحصيلي (الفصل الأول)</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <h2 class="section-title"><i class="fa-solid fa-sliders"></i> تنويع اساليب التقويم</h2>
+                <div class="links-grid">
+                    <a href="https://drive.google.com/open?id=1L9qQLYXXIvASa6VNqs_7imlkCdDuIHRR" target="_blank" class="doc-link">
+                        <i class="fa-solid fa-file-pdf file-icon"></i>
+                        <span class="link-text">اختبار استماع انجليزي الترم الاول 1447هـ</span>
+                        <i class="fa-solid fa-chevron-left arrow-icon"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>جميع الحقوق محفوظة © أ. شريفة محمد مرعي البارقي - 1447هـ / 2026م</p>
+    </footer>
+
+</body>
+</html>
