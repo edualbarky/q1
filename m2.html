@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة الرخصة المهنية - حاسب آلي</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Cairo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Stable Lucide Icons CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.344.0/dist/umd/lucide.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        cairo: ['Cairo', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            700: '#0f766e',
+                            900: '#115e59',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            scroll-behavior: smooth;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .dark ::-webkit-scrollbar-track {
+            background: #1f2937;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #14b8a6;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0d9488;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100 transition-colors duration-300">
+
+    <!-- Top Navigation Bar -->
+    <nav class="sticky top-0 z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center gap-3">
+                    <div class="p-2 bg-brand-500 text-white rounded-xl shadow-lg shadow-brand-500/30">
+                        <i data-lucide="graduation-cap" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <span class="text-lg font-bold bg-gradient-to-r from-brand-600 to-teal-500 bg-clip-text text-transparent">رخصتي | حاسب آلي</span>
+                        <span class="block text-[10px] text-slate-500 dark:text-slate-400">بوابة المعايير والمؤشرات المهنية</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center gap-6">
+                    <button onclick="switchTab('dashboard')" class="nav-link active px-3 py-2 rounded-lg text-sm font-semibold text-brand-600 dark:text-brand-500 flex items-center gap-2 transition-all">
+                        <i data-lucide="layout-dashboard" class="w-4 h-4"></i> الرئيسية
+                    </button>
+                    <button onclick="switchTab('standards')" class="nav-link px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-brand-500 flex items-center gap-2 transition-all">
+                        <i data-lucide="book-open" class="w-4 h-4"></i> المعايير والشرح
+                    </button>
+                    <button onclick="switchTab('simulator')" class="nav-link px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-brand-500 flex items-center gap-2 transition-all">
+                        <i data-lucide="cpu" class="w-4 h-4"></i> محاكي البوابات
+                    </button>
+                    <button onclick="switchTab('exam')" class="nav-link px-3 py-2 rounded-lg text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-brand-500 flex items-center gap-2 transition-all">
+                        <i data-lucide="check-square" class="w-4 h-4"></i> الاختبار التجريبي
+                    </button>
+                </div>
+
+                <!-- Dark Mode Toggle & Sidebar Button -->
+                <div class="flex items-center gap-4">
+                    <button id="themeToggle" aria-label="تبديل المظهر" class="p-2.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-lg hover:scale-105 transition-all">
+                        <i id="themeIcon" data-lucide="moon" class="w-5 h-5"></i>
+                    </button>
+                    <button class="md:hidden p-2 text-slate-600 dark:text-slate-300" onclick="toggleMobileMenu()" aria-label="القائمة">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobileMenu" class="hidden fixed inset-0 z-40 bg-slate-900/50 backdrop-blur-sm md:hidden animate-fade-in" onclick="toggleMobileMenu()">
+        <div class="fixed top-0 right-0 w-64 h-full bg-white dark:bg-slate-900 p-6 shadow-xl transition-transform" onclick="event.stopPropagation()">
+            <div class="flex items-center justify-between mb-8">
+                <span class="font-bold text-brand-600 dark:text-brand-400">القائمة الأساسية</span>
+                <button onclick="toggleMobileMenu()" aria-label="إغلاق القائمة"><i data-lucide="x" class="w-6 h-6"></i></button>
+            </div>
+            <div class="flex flex-col gap-4">
+                <button onclick="switchTab('dashboard'); toggleMobileMenu();" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-right w-full font-bold">
+                    <i data-lucide="layout-dashboard" class="text-brand-500"></i> لوحة التحكم
+                </button>
+                <button onclick="switchTab('standards'); toggleMobileMenu();" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-right w-full font-bold">
+                    <i data-lucide="book-open" class="text-brand-500"></i> المعايير والشرح
+                </button>
+                <button onclick="switchTab('simulator'); toggleMobileMenu();" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-right w-full font-bold">
+                    <i data-lucide="cpu" class="text-brand-500"></i> محاكي البوابات
+                </button>
+                <button onclick="switchTab('exam'); toggleMobileMenu();" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-right w-full font-bold">
+                    <i data-lucide="check-square" class="text-brand-500"></i> الاختبار التجريبي
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- ======================= TAB 1: DASHBOARD ======================= -->
+        <section id="tab-dashboard" class="tab-content block space-y-8 animate-fade-in">
+            <!-- Hero Header -->
+            <div class="relative bg-gradient-to-l from-brand-700 to-teal-500 rounded-3xl p-8 sm:p-12 overflow-hidden shadow-2xl shadow-brand-500/10">
+                <div class="absolute -right-10 -bottom-10 opacity-10 text-white pointer-events-none">
+                    <i data-lucide="database" class="w-80 h-80"></i>
+                </div>
+                <div class="relative z-10 max-w-2xl space-y-4">
+                    <span class="inline-block bg-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full backdrop-blur-sm">تحديثات 2026 الرسمية</span>
+                    <h1 class="text-3xl sm:text-5xl font-extrabold text-white leading-tight">معايير الرخصة المهنية للحاسب الآلي</h1>
+                    <p class="text-teal-50 text-base sm:text-lg leading-relaxed">
+                        بوابتك التفاعلية الشاملة لاجتياز اختبار رخصة المعلمين والمعلمات لتخصص الحاسب الآلي بيسر وسهولة، مع شرح تطبيقي، ونظام اختبار ذكي.
+                    </p>
+                    <div class="flex flex-wrap gap-4 pt-4">
+                        <button onclick="switchTab('standards')" class="px-6 py-3 bg-white text-brand-700 font-bold rounded-xl hover:bg-teal-50 hover:scale-105 transition-all shadow-md flex items-center gap-2">
+                            ابدأ تصفح الشرح <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                        </button>
+                        <button onclick="switchTab('exam')" class="px-6 py-3 bg-brand-900/40 text-white border border-white/20 font-bold rounded-xl hover:bg-brand-900/60 hover:scale-105 transition-all backdrop-blur-sm flex items-center gap-2">
+                            ابدأ الاختبار التجريبي <i data-lucide="zap" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-100 dark:border-slate-700/60 shadow-sm flex items-center gap-4">
+                    <div class="p-4 bg-teal-50 dark:bg-teal-950/40 text-teal-500 rounded-xl"><i data-lucide="layers" class="w-6 h-6"></i></div>
+                    <div><span class="block text-2xl font-black">6</span><span class="text-xs text-slate-500 dark:text-slate-400">مجالات رئيسية</span></div>
+                </div>
+                <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-100 dark:border-slate-700/60 shadow-sm flex items-center gap-4">
+                    <div class="p-4 bg-blue-50 dark:bg-blue-950/40 text-blue-500 rounded-xl"><i data-lucide="list-checks" class="w-6 h-6"></i></div>
+                    <div><span class="block text-2xl font-black">20</span><span class="text-xs text-slate-500 dark:text-slate-400">معياراً فرعياً</span></div>
+                </div>
+                <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-100 dark:border-slate-700/60 shadow-sm flex items-center gap-4">
+                    <div class="p-4 bg-purple-50 dark:bg-purple-950/40 text-purple-500 rounded-xl"><i data-lucide="clipboard-list" class="w-6 h-6"></i></div>
+                    <div><span class="block text-2xl font-black">120+</span><span class="text-xs text-slate-500 dark:text-slate-400">مؤشر أداء دقيق</span></div>
+                </div>
+                <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-100 dark:border-slate-700/60 shadow-sm flex items-center gap-4">
+                    <div class="p-4 bg-amber-50 dark:bg-amber-950/40 text-amber-500 rounded-xl"><i data-lucide="help-circle" class="w-6 h-6"></i></div>
+                    <div><span class="block text-2xl font-black">25</span><span class="text-xs text-slate-500 dark:text-slate-400">سؤال محاكاة</span></div>
+                </div>
+            </div>
+
+            <!-- Fields Grid Overview -->
+            <div class="space-y-4">
+                <h2 class="text-xl font-extrabold text-slate-800 dark:text-white flex items-center gap-2">
+                    <span class="w-2.5 h-6 bg-brand-500 rounded-full"></span> مجالات اختبار الحاسب الآلي الرئيسية
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Card 1 -->
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-100 dark:border-slate-700/60 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 w-2 h-full bg-brand-500"></div>
+                        <h3 class="font-extrabold text-lg mb-2 text-slate-950 dark:text-white">المجال الأول: بنية الحاسب وأنظمة التشغيل</h3>
+                        <p class="text-sm text-slate-500 dark:text-slate-400 mb-4 line-clamp-2">يشمل المنطق الرقمي، البوابات، مكونات المعالج، الذاكرة، وجدولة المعالجات في أنظمة التشغيل.</p>
+                        <button onclick="openField(1)" class="text-xs font-bold text-brand-600 dark:text-brand-500 flex items-center gap-1 group-hover:translate-x-[-4px] transition-transform">تصفح المعيار <i data-lucide="chevron-left" class="w-4 h-4"></i></button>
+                    </div>
+                    <!-- Card 2 -->
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-100 dark:border-slate-700/60 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 w-2 h-full bg-blue-500"></div>
+                        <h3 class="font-extrabold text-lg mb-2 text-slate-950 dark:text-white">المجال الثاني: شبكات وأمن المعلومات</h3>
+                        <p class="text-sm text-slate-500 dark:text-slate-400 mb-4 line-clamp-2">يغطي طبقات OSI، بروتوكولات الشبكات، هندسة الشبكة وعناوين IPv4/IPv6، وتقنيات التشفير وأمن السيبراني.</p>
+                        <button onclick="openField(2)" class="text-xs font-bold text-blue-600 dark:text-blue-500 flex items-center gap-1 group-hover:translate-x-[-4px] transition-transform">تصفح المعيار <i data-lucide="chevron-left" class="w-4 h-4"></i></button>
+                    </div>
+                    <!-- Card 3 -->
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-100 dark:border-slate-700/60 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 w-2 h-full bg-purple-500"></div>
+                        <h3 class="font-extrabold text-lg mb-2 text-slate-950 dark:text-white">المجال الثالث: البرمجة وهياكل البيانات</h3>
+                        <p class="text-sm text-slate-500 dark:text-slate-400 mb-4 line-clamp-2">يتناول مبادئ البرمجة الكائنية والشيئية OOP، تتبع الكود، القوائم المتصلة، الأشجار الثنائية، والمصفوفات.</p>
+                        <button onclick="openField(3)" class="text-xs font-bold text-purple-600 dark:text-purple-400 flex items-center gap-1 group-hover:translate-x-[-4px] transition-transform">تصفح المعيار <i data-lucide="chevron-left" class="w-4 h-4"></i></button>
+                    </div>
+                    <!-- Card 4 -->
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-100 dark:border-slate-700/60 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 w-2 h-full bg-rose-500"></div>
+                        <h3 class="font-extrabold text-lg mb-2 text-slate-950 dark:text-white">المجال الرابع: قواعد البيانات وتحليل النظم</h3>
+                        <p class="text-sm text-slate-500 dark:text-slate-400 mb-4 line-clamp-2">مخططات الكيانات والروابط (ERD)، العلاقات، لغة الاستعلام الهيكلية (SQL)، ومراحل هندسة النظم.</p>
+                        <button onclick="openField(4)" class="text-xs font-bold text-rose-600 dark:text-rose-500 flex items-center gap-1 group-hover:translate-x-[-4px] transition-transform">تصفح المعيار <i data-lucide="chevron-left" class="w-4 h-4"></i></button>
+                    </div>
+                    <!-- Card 5 -->
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-100 dark:border-slate-700/60 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 w-2 h-full bg-emerald-500"></div>
+                        <h3 class="font-extrabold text-lg mb-2 text-slate-950 dark:text-white">المجال الخامس: الذكاء الاصطناعي وهندسة البرمجيات</h3>
+                        <p class="text-sm text-slate-500 dark:text-slate-400 mb-4 line-clamp-2">مفاهيم الذكاء الاصطناعي، تعلم الآلة، دورة حياة إنتاج البرمجيات، النماذج الرشيقة Agile والشلال.</p>
+                        <button onclick="openField(5)" class="text-xs font-bold text-emerald-600 dark:text-emerald-500 flex items-center gap-1 group-hover:translate-x-[-4px] transition-transform">تصفح المعيار <i data-lucide="chevron-left" class="w-4 h-4"></i></button>
+                    </div>
+                    <!-- Card 6 -->
+                    <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-100 dark:border-slate-700/60 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 w-2 h-full bg-amber-500"></div>
+                        <h3 class="font-extrabold text-lg mb-2 text-slate-950 dark:text-white">المجال السادس: طرق تدريس الحاسب الآلي</h3>
+                        <p class="text-sm text-slate-500 dark:text-slate-400 mb-4 line-clamp-2">استراتيجيات التعليم التفاعلي، مهارات التفكير الحاسوبي والمنطقي، التقييم وأخلاقيات التقنية.</p>
+                        <button onclick="openField(6)" class="text-xs font-bold text-amber-600 dark:text-amber-500 flex items-center gap-1 group-hover:translate-x-[-4px] transition-transform">تصفح المعيار <i data-lucide="chevron-left" class="w-4 h-4"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pro Tip Container -->
+            <div class="p-6 bg-brand-50 dark:bg-brand-950/20 border border-brand-200 dark:border-brand-900 rounded-2xl flex items-start gap-4">
+                <div class="p-2 bg-brand-500 text-white rounded-xl shadow-lg shadow-brand-500/20"><i data-lucide="lightbulb" class="w-6 h-6 animate-pulse"></i></div>
+                <div>
+                    <h4 class="font-extrabold text-brand-900 dark:text-brand-300">نصيحة ذهبية لاجتياز الاختبار:</h4>
+                    <p class="text-sm text-brand-700 dark:text-brand-400 mt-1">
+                        توزيع الأسئلة يعتمد بشكل مكثف على معايير الشبكات والبرمجة والمنطق الرقمي (حوالي 60% من درجة الاختبار). استخدم محاكي المنطق المدمج في الموقع لضمان فهم البوابات والعمليات الثنائية بصورة تضمن لك تفادي الأخطاء الشائعة.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================= TAB 2: STANDARDS DETAIL ======================= -->
+        <section id="tab-standards" class="tab-content hidden space-y-6 animate-fade-in">
+            <!-- Sidebar & Main Explanation Layout -->
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                <!-- Navigation Sidebar of Fields -->
+                <div class="lg:col-span-1 space-y-2">
+                    <span class="text-xs font-bold text-slate-400 tracking-wider block mb-2">قائمة مجالات التخصص:</span>
+                    <div class="flex flex-row lg:flex-col gap-2 overflow-x-auto lg:overflow-x-visible pb-4 lg:pb-0 scrollbar-none" id="sidebar-tabs">
+                        <button onclick="selectField(1)" id="side-tab-1" class="field-tab flex-shrink-0 flex items-center gap-3 p-3 rounded-xl bg-brand-500 text-white font-bold w-full text-right transition-all">
+                            <span class="w-6 h-6 rounded-lg bg-white/20 flex items-center justify-center text-xs font-bold">١</span>
+                            بنية المعالج وأنظمة التشغيل
+                        </button>
+                        <button onclick="selectField(2)" id="side-tab-2" class="field-tab flex-shrink-0 flex items-center gap-3 p-3 rounded-xl bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-semibold hover:bg-slate-100 dark:hover:bg-slate-700 w-full text-right transition-all">
+                            <span class="w-6 h-6 rounded-lg bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-xs font-bold">٢</span>
+                            الشبكات وأمن المعلومات
+                        </button>
+                        <button onclick="selectField(3)" id="side-tab-3" class="field-tab flex-shrink-0 flex items-center gap-3 p-3 rounded-xl bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-semibold hover:bg-slate-100 dark:hover:bg-slate-700 w-full text-right transition-all">
+                            <span class="w-6 h-6 rounded-lg bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-xs font-bold">٣</span>
+                            البرمجة وهياكل البيانات
+                        </button>
+                        <button onclick="selectField(4)" id="side-tab-4" class="field-tab flex-shrink-0 flex items-center gap-3 p-3 rounded-xl bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-semibold hover:bg-slate-100 dark:hover:bg-slate-700 w-full text-right transition-all">
+                            <span class="w-6 h-6 rounded-lg bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-xs font-bold">٤</span>
+                            قواعد البيانات وتحليل النظم
+                        </button>
+                        <button onclick="selectField(5)" id="side-tab-5" class="field-tab flex-shrink-0 flex items-center gap-3 p-3 rounded-xl bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-semibold hover:bg-slate-100 dark:hover:bg-slate-700 w-full text-right transition-all">
+                            <span class="w-6 h-6 rounded-lg bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-xs font-bold">٥</span>
+                            الذكاء الاصطناعي والبرمجيات
+                        </button>
+                        <button onclick="selectField(6)" id="side-tab-6" class="field-tab flex-shrink-0 flex items-center gap-3 p-3 rounded-xl bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-semibold hover:bg-slate-100 dark:hover:bg-slate-700 w-full text-right transition-all">
+                            <span class="w-6 h-6 rounded-lg bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-xs font-bold">٦</span>
+                            طرق واستراتيجيات التدريس
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Explanation Body -->
+                <div class="lg:col-span-3 space-y-6">
+                    <div id="field-content-box" class="bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-8 border border-slate-100 dark:border-slate-700/60 shadow-sm space-y-8">
+                        <!-- Dynamic Content injected here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================= TAB 3: LOGIC GATE SIMULATOR ======================= -->
+        <section id="tab-simulator" class="tab-content hidden space-y-6 animate-fade-in">
+            <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-8 border border-slate-100 dark:border-slate-700/60 shadow-sm space-y-6">
+                <div>
+                    <h2 class="text-2xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
+                        <i data-lucide="cpu" class="text-brand-500"></i> محاكي البوابات والمنطق الرقمي التفاعلي
+                    </h2>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">يغطي المعيار الأول: فهم مبادئ البوابات المنطقية وجداول الحقيقة الأساسية عبر المحاكاة البصرية الحية.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Control Panel -->
+                    <div class="bg-slate-50 dark:bg-slate-900 p-6 rounded-2xl border border-slate-100 dark:border-slate-800 space-y-6">
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block">الإعدادات والمحاكاة</span>
+                        
+                        <!-- Select Gate Type -->
+                        <div class="space-y-2">
+                            <label class="block text-sm font-bold">اختر البوابة المنطقية:</label>
+                            <select id="gate-select" onchange="runSimulation()" class="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-3 rounded-xl font-bold focus:ring-2 focus:ring-brand-500 outline-none">
+                                <option value="AND">AND (و - بوابة الضرب)</option>
+                                <option value="OR">OR (أو - بوابة الجمع)</option>
+                                <option value="XOR">XOR (أو الاستثنائية - عدم التشابه)</option>
+                                <option value="NAND">NAND (نفي AND)</option>
+                                <option value="NOR">NOR (نفي OR)</option>
+                                <option value="NOT">NOT (النفي والعكس - مدخل واحد)</option>
+                            </select>
+                        </div>
+
+                        <!-- Toggle Inputs -->
+                        <div class="space-y-4 pt-2">
+                            <span class="block text-sm font-bold">تغيير حالة المدخلات الرقمية:</span>
+                            <div class="flex items-center justify-between p-3 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700/60">
+                                <span class="text-sm font-semibold flex items-center gap-2"><span class="w-3 h-3 bg-blue-500 rounded-full"></span> المدخل أ (Input A)</span>
+                                <button onclick="toggleInput('A')" id="btn-input-A" class="px-4 py-1.5 bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-white font-black rounded-lg transition-all hover:scale-105">0</button>
+                            </div>
+
+                            <div id="input-B-wrapper" class="flex items-center justify-between p-3 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700/60">
+                                <span class="text-sm font-semibold flex items-center gap-2"><span class="w-3 h-3 bg-purple-500 rounded-full"></span> المدخل ب (Input B)</span>
+                                <button onclick="toggleInput('B')" id="btn-input-B" class="px-4 py-1.5 bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-white font-black rounded-lg transition-all hover:scale-105">0</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Visual Circuit Board Canvas Area -->
+                    <div class="md:col-span-2 bg-slate-950 rounded-2xl border border-slate-800 p-8 flex flex-col items-center justify-center relative overflow-hidden min-h-[300px]">
+                        <div class="absolute top-4 right-4 bg-slate-900/80 border border-slate-800 rounded-lg px-3 py-1 text-[11px] text-teal-400 font-mono tracking-widest uppercase">مخطط الدائرة الحي</div>
+                        
+                        <!-- The Live Schematic -->
+                        <div class="flex items-center gap-8 md:gap-16 relative z-10 w-full max-w-lg justify-between">
+                            <!-- Inputs Nodes -->
+                            <div class="flex flex-col gap-12 text-center">
+                                <div class="relative">
+                                    <div id="sim-node-A" class="w-12 h-12 rounded-full border-4 border-slate-600 bg-slate-800 flex items-center justify-center text-white font-extrabold transition-all duration-300">0</div>
+                                    <span class="block text-xs mt-1 text-slate-400">مدخل A</span>
+                                </div>
+                                <div id="sim-node-B-container" class="relative">
+                                    <div id="sim-node-B" class="w-12 h-12 rounded-full border-4 border-slate-600 bg-slate-800 flex items-center justify-center text-white font-extrabold transition-all duration-300">0</div>
+                                    <span class="block text-xs mt-1 text-slate-400">مدخل B</span>
+                                </div>
+                            </div>
+
+                            <!-- Gate Center graphic -->
+                            <div class="flex flex-col items-center justify-center relative">
+                                <div class="p-6 bg-slate-900 border-2 border-brand-500 rounded-2xl shadow-xl shadow-brand-500/10 min-w-[100px] text-center">
+                                    <span id="gate-icon-text" class="text-3xl font-black text-brand-400 font-sans tracking-wide animate-pulse">AND</span>
+                                </div>
+                                <span class="block text-xs mt-2 text-slate-400">معالجة البوابة</span>
+                            </div>
+
+                            <!-- Output Node -->
+                            <div class="flex flex-col items-center justify-center">
+                                <div id="sim-node-out" class="w-16 h-16 rounded-full border-4 border-slate-700 bg-slate-800 flex items-center justify-center text-white font-black text-xl transition-all duration-300 shadow-lg">0</div>
+                                <span class="block text-xs mt-2 text-slate-400">المخرج (Y)</span>
+                            </div>
+                        </div>
+
+                        <!-- Sparklines visualizer in background -->
+                        <div class="absolute bottom-4 left-4 text-[10px] font-mono text-slate-500 flex items-center gap-3">
+                            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-brand-500 animate-ping"></span> تدفق كهربائي نشط</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Truth Table Generator -->
+                <div class="pt-6 border-t border-slate-100 dark:border-slate-800">
+                    <h3 class="font-extrabold mb-4 flex items-center gap-2"><i data-lucide="grid" class="w-5 h-5 text-purple-500"></i> جدول الحقيقة (Truth Table) للبوابة الحالية</h3>
+                    <div class="overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/40">
+                        <table class="w-full text-center text-sm">
+                            <thead>
+                                <tr class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold border-b border-slate-200 dark:border-slate-700">
+                                    <th class="p-3">المدخل A</th>
+                                    <th class="p-3">المدخل B</th>
+                                    <th class="p-3 text-brand-600 dark:text-brand-400">المخرج Y</th>
+                                    <th class="p-3 text-slate-400">الحالة النشطة حالياً</th>
+                                </tr>
+                            </thead>
+                            <tbody id="truth-table-body" class="font-mono">
+                                <!-- Generated Dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================= TAB 4: EXAM SIMULATION ======================= -->
+        <section id="tab-exam" class="tab-content hidden space-y-6 animate-fade-in">
+            <!-- Quiz Main Box -->
+            <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-8 border border-slate-100 dark:border-slate-700/60 shadow-md space-y-6">
+                <!-- Header Stats of Exam -->
+                <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 dark:border-slate-700 pb-4">
+                    <div>
+                        <h2 class="text-2xl font-extrabold text-slate-950 dark:text-white flex items-center gap-2">
+                            <i data-lucide="shield-check" class="text-brand-500"></i> اختبار المحاكاة الذكي للرخصة المهنية
+                        </h2>
+                        <p class="text-xs text-slate-400 mt-1">يحتوي هذا الاختبار التجريبي على 10 أسئلة تغطي جميع المجالات مع تقييم نهائي.</p>
+                    </div>
+                    <div class="flex items-center gap-4 bg-slate-50 dark:bg-slate-900 px-4 py-2 rounded-xl">
+                        <div class="text-center">
+                            <span class="block text-xs text-slate-400">السؤال الحالي</span>
+                            <span id="quiz-progress" class="font-black text-brand-600">1 / 10</span>
+                        </div>
+                        <div class="w-px h-8 bg-slate-200 dark:bg-slate-700"></div>
+                        <div class="text-center">
+                            <span class="block text-xs text-slate-400">معدل الإجابة الصحيحة</span>
+                            <span id="quiz-score" class="font-black text-teal-500">0%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Exam Screen (Before Starting / Result Screen / Active Question Screen) -->
+                <div id="quiz-screen-start" class="text-center py-12 space-y-6 max-w-xl mx-auto animate-fade-in">
+                    <div class="w-20 h-20 bg-brand-100 dark:bg-brand-950 text-brand-500 rounded-full flex items-center justify-center mx-auto shadow-inner">
+                        <i data-lucide="hourglass" class="w-10 h-10 animate-spin"></i>
+                    </div>
+                    <div class="space-y-2">
+                        <h3 class="text-xl font-extrabold">مستعد لبدء التحدي؟</h3>
+                        <p class="text-sm text-slate-500">الأسئلة مصممة بناءً على مستويات صعوبة قياس والمركز الوطني للتقويم والتميز المدرسي لضمان محاكاة قوية وحقيقية.</p>
+                    </div>
+                    <button onclick="startQuiz()" class="px-8 py-3 bg-brand-500 hover:bg-brand-600 text-white font-extrabold rounded-xl shadow-lg shadow-brand-500/30 hover:scale-105 transition-all">ابدأ الاختبار الفوري</button>
+                </div>
+
+                <!-- Active Question Layout -->
+                <div id="quiz-screen-active" class="hidden space-y-6">
+                    <!-- Category Badge -->
+                    <span id="quiz-cat-badge" class="inline-block bg-teal-100 dark:bg-teal-950/40 text-brand-600 dark:text-brand-400 text-xs font-bold px-3 py-1 rounded-full">المجال: البرمجة وقواعد البيانات</span>
+                    
+                    <!-- Question Title -->
+                    <h3 id="quiz-question-text" class="text-lg font-extrabold text-slate-900 dark:text-white leading-relaxed">ما هو التعقيد الزمني لعملية البحث الثنائي (Binary Search) في أسوأ الحالات؟</h3>
+
+                    <!-- Code / Context Block if necessary -->
+                    <div id="quiz-code-block" class="hidden p-4 bg-slate-950 text-left font-mono text-sm rounded-xl text-emerald-400 overflow-x-auto">
+                        <!-- Custom pseudo-code visualizer -->
+                    </div>
+
+                    <!-- Answers Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="quiz-answers-grid">
+                        <!-- Simulated Answer Option Elements -->
+                    </div>
+
+                    <!-- Bottom Explanatory feedback box (Initially Hidden) -->
+                    <div id="quiz-feedback" class="hidden p-6 bg-slate-50 dark:bg-slate-900 border-l-4 border-slate-400 rounded-2xl space-y-2 animate-fade-in">
+                        <div class="flex items-center gap-2">
+                            <span id="feedback-icon" class="text-2xl">💡</span>
+                            <span id="feedback-title" class="font-bold text-lg">التفسير والشرح الأكاديمي:</span>
+                        </div>
+                        <p id="feedback-desc" class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                            البحث الثنائي يقوم بتقسيم مصفوفة البحث إلى النصف في كل خطوة، مما يعطي تعقيد زمني من رتبة اللوغاريتم.
+                        </p>
+                    </div>
+
+                    <!-- Actions Controller -->
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-800">
+                        <span class="text-xs text-slate-400">لا تتسرع في الإجابة، ركز على المطلوب فالمؤشرات دقيقة.</span>
+                        <button onclick="nextQuestion()" id="btn-next-question" class="hidden px-6 py-2 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl shadow-md flex items-center gap-2">السؤال التالي <i data-lucide="chevron-left" class="w-4 h-4"></i></button>
+                    </div>
+                </div>
+
+                <!-- Result Screen -->
+                <div id="quiz-screen-results" class="hidden text-center py-12 space-y-6 max-w-xl mx-auto">
+                    <div id="result-visual-icon" class="w-24 h-24 bg-teal-500 text-white rounded-full flex items-center justify-center mx-auto shadow-lg">
+                        <i data-lucide="party-popper" class="w-12 h-12"></i>
+                    </div>
+                    <div class="space-y-2">
+                        <h3 class="text-3xl font-black text-slate-950 dark:text-white">نتيجة الاختبار التقييمي</h3>
+                        <p class="text-sm text-slate-400">لقد انتهيت من اختبار المحاكاة ومستواك الحالي هو:</p>
+                    </div>
+                    <div class="p-6 bg-slate-50 dark:bg-slate-900 rounded-3xl border border-slate-100 dark:border-slate-800">
+                        <span class="block text-5xl font-black text-brand-500 mb-2" id="results-score-text">8 / 10</span>
+                        <span class="font-extrabold text-lg block" id="results-feedback-title">ممتاز جداً - أنت مؤهل لاجتياز الاختبار الحقيقي!</span>
+                    </div>
+                    <div class="flex justify-center gap-4">
+                        <button onclick="startQuiz()" class="px-6 py-3 bg-brand-500 hover:bg-brand-600 text-white font-bold rounded-xl shadow-lg flex items-center gap-2"><i data-lucide="rotate-ccw" class="w-5 h-5"></i> إعادة المحاولة</button>
+                        <button onclick="switchTab('standards')" class="px-6 py-3 bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-white font-bold rounded-xl flex items-center gap-2"><i data-lucide="book-open" class="w-5 h-5"></i> mراجعة الشروحات</button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer Area with Credits to Muhammad Ahmad Al-Barqi -->
+    <footer class="bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 mt-16 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center space-y-6">
+            <div class="flex items-center justify-center gap-3">
+                <div class="p-1.5 bg-brand-500 text-white rounded-lg">
+                    <i data-lucide="shield-check" class="w-5 h-5"></i>
+                </div>
+                <span class="text-md font-bold text-slate-700 dark:text-slate-300">بوابة معايير الرخصة المهنية - تخصص الحاسب الآلي لعام 2026</span>
+            </div>
+            <p class="text-sm text-slate-400 max-w-xl mx-auto">
+                تم إنشاء وتصميم هذا الموقع الإلكتروني بالاستناد إلى أفضل الممارسات الأكاديمية والتصنيفات المهنية الصادرة عن هيئة تقويم التعليم والتدريب لمساعدة المعلمين والمعلمات في السعودية.
+            </p>
+            <div class="text-sm font-semibold text-slate-500 dark:text-slate-400">
+                إعداد وتطوير: <span class="text-brand-600 dark:text-brand-400 font-extrabold text-base">محمد أحمد البارقي</span>
+            </div>
+            <div class="text-[11px] text-slate-400 pt-4 border-t border-slate-100 dark:border-slate-800">
+                جميع الحقوق محفوظة &copy; 2026. رخصتي | حاسب آلي.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Dynamic JavaScript Engine -->
+    <script>
+        // DOM Theme Switcher Logic
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        
+        themeToggle.addEventListener('click', () => {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+                themeIcon.setAttribute('data-lucide', 'moon');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                themeIcon.setAttribute('data-lucide', 'sun');
+            }
+            lucide.createIcons();
+        });
+
+        // Initialize theme check on load
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            themeIcon.setAttribute('data-lucide', 'sun');
+        } else {
+            document.documentElement.classList.remove('dark');
+            themeIcon.setAttribute('data-lucide', 'moon');
+        }
+
+        // Mobile Menu Drawer Control
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Routing/Tab Switching Logic
+        function switchTab(tabId) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.add('hidden');
+                tab.classList.remove('block');
+            });
+            // Show requested tab
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+            document.getElementById(`tab-${tabId}`).classList.add('block');
+
+            // Update nav status styles
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('text-brand-600', 'dark:text-brand-500', 'active');
+                link.classList.add('text-slate-600', 'dark:text-slate-400');
+            });
+            // Highlight active desktop item
+            event?.target?.closest('button')?.classList?.add('text-brand-600', 'dark:text-brand-500', 'active');
+
+            if(tabId === 'simulator') {
+                runSimulation();
+            }
+        }
+
+        function openField(fieldIndex) {
+            switchTab('standards');
+            selectField(fieldIndex);
+        }
+
+        // --- ACADEMIC DATABASE FOR SECTIONS ---
+        const fieldsDatabase = {
+            1: {
+                title: "المجال الأول: بنية الحاسب وأنظمة التشغيل",
+                description: "يشمل هذا المعيار الأساس الأكاديمي والفيزيائي والمنطقي لبناء وحدات المعالجة وتفسير السيرورة البرمجية بداخل الذاكرة العشوائية وإدارة أداء الأجهزة.",
+                standards: [
+                    {
+                        title: "معيار المنطق الرقمي وبناء الدوائر المنطقية والتحويل الثنائي",
+                        pointers: [
+                            "فهم آليات التحويل بين الأنظمة العددية المختلفة (الأنظمة: الثنائية، والثمانية، والعشرية، والست عشرية).",
+                            "رسم وتحليل جداول الحقيقة (Truth Tables) للبوابات المنطقية الأساسية والمركبة.",
+                            "تبسيط التعبيرات المنطقية باستخدام جبر بول (Boolean Algebra) وخرائط كارنوف (K-Maps)."
+                        ],
+                        diagram: `
+                        <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-4">
+                            <span class="text-xs font-bold text-teal-400 uppercase tracking-widest block font-mono">خريطة مفاهيم: التحويلات الرقمية</span>
+                            <div class="flex flex-col sm:flex-row items-center justify-around gap-4 text-center text-xs text-white">
+                                <div class="p-4 bg-slate-800 border border-slate-700 rounded-xl w-32">
+                                    <span class="block font-black text-brand-400 text-lg">عشري (Dec)</span>
+                                    <span class="text-[10px] text-slate-400">الأساس 10</span>
+                                </div>
+                                <div class="text-slate-500 text-2xl">↔</div>
+                                <div class="p-4 bg-slate-800 border border-slate-700 rounded-xl w-32">
+                                    <span class="block font-black text-blue-400 text-lg">ثنائي (Bin)</span>
+                                    <span class="text-[10px] text-slate-400">الأساس 2</span>
+                                </div>
+                                <div class="text-slate-500 text-2xl">↔</div>
+                                <div class="p-4 bg-slate-800 border border-slate-700 rounded-xl w-32">
+                                    <span class="block font-black text-purple-400 text-lg">ست عشري (Hex)</span>
+                                    <span class="text-[10px] text-slate-400">الأساس 16</span>
+                                </div>
+                            </div>
+                        </div>`
+                    },
+                    {
+                        title: "معيار معمارية المعالج (CPU) ودورة جلب وتنفيذ التعليمة",
+                        pointers: [
+                            "توضيح دور وحدة التحكم (CU) ووحدة الحساب والمنطق (ALU) والمسجلات (Registers) كمسجل المركم وجامع البيانات.",
+                            "تتبع مراحل دورة حياة التعليمة: جلب (Fetch) -> فك شفرة (Decode) -> تنفيذ (Execute) -> كتابة نتيجة (Write back).",
+                            "التمييز بين هياكل الحوسبة مثل بنية فون نيومان وهيكل هارفارد المعماري لتبادل التعليمات."
+                        ]
+                    },
+                    {
+                        title: "معيار أنظمة التشغيل وإدارة الذاكرة والجدولة",
+                        pointers: [
+                            "التعرف على هياكل أنظمة التشغيل ووظائف النواة (Kernel).",
+                            "تحليل خوارزميات جدولة وحدة المعالجة المركزية (First-Come First-Served، Shortest Job First، Round Robin).",
+                            "مفاهيم إدارة الذاكرة والتجزئة (Paging) ومشاكل الاختناق أو المأزق الصامت (Deadlock)."
+                        ]
+                    }
+                ]
+            },
+            2: {
+                title: "المجال الثاني: شبكات وأمن المعلومات والإنترنت",
+                description: "يركز هذا المجال على آلية عمل شبكات النطاق الواسع والضيق، كيفية تبادل حزم البيانات عبر بروتوكولات حزم الشبكة المختلفة، وأساليب تأمين البيانات.",
+                standards: [
+                    {
+                        title: "معيار نموذج الاتصال المفتوح (OSI Model) ومجموعات TCP/IP",
+                        pointers: [
+                            "القدرة التامة على سرد طبقات OSI السبع وتحديد بروتوكول كل طبقة والوظيفة التفصيلية لكل مرحلة.",
+                            "مقارنة عملية التحزيم (Encapsulation) وفكها في جهتي المرسل والمستقبل على الشبكة."
+                        ],
+                        diagram: `
+                        <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-4">
+                            <span class="text-xs font-bold text-teal-400 uppercase tracking-widest block font-mono text-center">طبقات نموذج الاتصال المفتوح السبع (OSI)</span>
+                            <div class="flex flex-col gap-1 font-mono text-xs max-w-sm mx-auto text-center text-white">
+                                <div class="bg-gradient-to-l from-brand-600 to-teal-500 p-2 rounded">7. Application (تطبيقات - HTTP, DNS)</div>
+                                <div class="bg-gradient-to-l from-brand-600 to-teal-500 p-2 rounded">6. Presentation (عرض - التشفير والضغط)</div>
+                                <div class="bg-gradient-to-l from-brand-600 to-teal-500 p-2 rounded">5. Session (جلسة - المزامنة والتحكم)</div>
+                                <div class="bg-blue-600 p-2 rounded">4. Transport (النقل - TCP, UDP)</div>
+                                <div class="bg-blue-700 p-2 rounded">3. Network (الشبكة - توجيه الحزم IP)</div>
+                                <div class="bg-purple-700 p-2 rounded">2. Data Link (ربط البيانات - MAC Address, Frame)</div>
+                                <div class="bg-slate-800 p-2 rounded border border-slate-700">1. Physical (المادية - الكيابل، النبضات الكهربائية)</div>
+                            </div>
+                        </div>`
+                    },
+                    {
+                        title: "معيار معنونة الأجهزة وبروتوكول IP",
+                        pointers: [
+                            "التمييز البنيوي بين حزم IPv4 (32-bit) ونظام العنونة IPv6 (128-bit) للتغلب على نفاد العناوين.",
+                            "حساب أقنعة الشبكات الفرعية (Subnet Masking) وحساب عناوين الأجهزة المتاحة لكل شبكة محلية LAN."
+                        ]
+                    },
+                    {
+                        title: "معيار أمن المعلومات، الأمن السيبراني وتقنيات التشفير",
+                        pointers: [
+                            "دراسة هجمات الشبكة (فدية Ransomware، حجب الخدمة الموزع DDoS، هندسة اجتماعية، هجمات Man-In-the-Middle).",
+                            "تصنيف التشفير المتماثل (Symmetric Key) والتشفير غير المتماثل (Asymmetric - زوج مفاتيح عام وخاص)."
+                        ]
+                    }
+                ]
+            },
+            3: {
+                title: "المجال الثالث: البرمجة وهياكل البيانات والتعقيد الخوارزمي",
+                description: "يبحث هذا المجال في المهارات العملية والأكاديمية لتصميم الأكواد وبنائها والتحقق من كفاءة زمن تشغيلها لتصميم تطبيقات متميزة.",
+                standards: [
+                    {
+                        title: "معيار البرمجة كائنية التوجه (Object-Oriented Programming)",
+                        pointers: [
+                            "شرح وتطبيق المفاهيم الأربعة الأساسية لـ OOP: التغليف (Encapsulation)، التوريث (Inheritance)، تعدد الأشكال (Polymorphism)، والتجريد (Abstraction).",
+                            "القدرة على تتبع كود برمجي بلغات مثل Python أو Java وفهم تتابع المنطق."
+                        ]
+                    },
+                    {
+                        title: "معيار هياكل البيانات وتخزين المكونات الرقمية",
+                        pointers: [
+                            "المقارنة بين هياكل البيانات الخطية (المصفوفات، القوائم المتصلة Linked List، المكدسات Stack، الطوابير Queue).",
+                            "فهم وتصميم الهياكل غير الخطية كالأشجار الثنائية للبحث (BST) ومخططات الشبكات والرسوم البيانية (Graphs)."
+                        ],
+                        diagram: `
+                        <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-4">
+                            <span class="text-xs font-bold text-teal-400 uppercase tracking-widest block font-mono text-center">أشكال هياكل البيانات الفائقة الأهمية</span>
+                            <div class="grid grid-cols-2 gap-4 text-xs text-center text-white">
+                                <div class="p-3 bg-slate-800 border border-slate-700 rounded-xl">
+                                    <span class="block font-bold text-amber-400 mb-2">المكدس (Stack)</span>
+                                    <div class="border-2 border-dashed border-slate-700 p-2 space-y-1 w-20 mx-auto">
+                                        <div class="bg-brand-500 p-1 text-[10px]">العنصر C</div>
+                                        <div class="bg-brand-600 p-1 text-[10px]">العنصر B</div>
+                                        <div class="bg-brand-700 p-1 text-[10px]">العنصر A</div>
+                                    </div>
+                                    <span class="block text-[9px] text-slate-400 mt-2">مبدأ: LIFO (الداخل آخراً هو الخارج أولاً)</span>
+                                </div>
+                                <div class="p-3 bg-slate-800 border border-slate-700 rounded-xl">
+                                    <span class="block font-bold text-teal-400 mb-2">الشجرة الثنائية (Binary Tree)</span>
+                                    <div class="flex flex-col items-center">
+                                        <div class="w-6 h-6 rounded-full bg-blue-500 text-xs flex items-center justify-center font-bold">10</div>
+                                        <div class="flex gap-4 mt-2">
+                                            <div class="w-6 h-6 rounded-full bg-purple-500 text-xs flex items-center justify-center font-bold">5</div>
+                                            <div class="w-6 h-6 rounded-full bg-purple-500 text-xs flex items-center justify-center font-bold">15</div>
+                                        </div>
+                                    </div>
+                                    <span class="block text-[9px] text-slate-400 mt-2">ربط هرمي غير خطي للعقد</span>
+                                </div>
+                            </div>
+                        </div>`
+                    },
+                    {
+                        title: "معيار تعقيد الخوارزميات (Big-O Notation)",
+                        pointers: [
+                            "تحليل أوقات التشغيل في الحالات القصوى والمتوسطة لخوارزميات الفرز والبحث.",
+                            "فهم الفارق بين الأداء ذو التعقيد الثابت O(1)، اللوغاريتمي O(log n)، الخطي O(n)، والتربيعي O(n²)."
+                        ]
+                    }
+                ]
+            },
+            4: {
+                title: "المجال الرابع: قواعد البيانات وتحليل وهندسة النظم",
+                description: "المهارات والأدوات المطلوبة لتصميم قواعد البيانات ذات الهيكلية والاتساق المرتفع والتعلم على نماذج تخطيط مشاريع الأنظمة الشاملة.",
+                standards: [
+                    {
+                        title: "معيار تصميم المخططات والعلاقات (ERD)",
+                        pointers: [
+                            "تحويل المتطلبات إلى مخطط علاقة الكيانات (ERD) وتحديد المفاتيح الأساسية (Primary Keys) والمفاتيح الأجنبية (Foreign Keys).",
+                            "تطبيق قواعد التسوية (Normalization) لتفادي تكرار البيانات وضمان الاتساق (1NF, 2NF, 3NF)."
+                        ]
+                    },
+                    {
+                        title: "معيار لغة الاستعلام الهيكلية (SQL)",
+                        pointers: [
+                            "تنفيذ استعلامات الاختيار المعقدة باستخدام شروط الفرز (WHERE, GROUP BY, HAVING, ORDER BY).",
+                            "الربط بين الجداول المختلفة باستخدام عمليات JOIN (Inner, Left, Right Join)."
+                        ]
+                    },
+                    {
+                        title: "معيار دورة حياة تطوير النظام (SDLC)",
+                        pointers: [
+                            "تتبع مراحل تطوير النظم: التخطيط -> التحليل -> التصميم -> التطوير والاختبار -> الصيانة والتنفيذ.",
+                            "مقارنة نموذج الشلال الكلاسيكي (Waterfall Model) بنموذج التطوير الرشيق (Agile Methodology) ذو التسليم المرن المتكرر."
+                        ]
+                    }
+                ]
+            },
+            5: {
+                title: "المجال الخامس: تقنيات المستقبل، الذكاء الاصطناعي والشبكات اللاسلكية",
+                description: "مفاهيم مرتبطة بالذكاء الاصطناعي، إنترنت الأشياء والبرمجة السحابية بما يتماشى مع التحديثات التقنية المتسارعة.",
+                standards: [
+                    {
+                        title: "معيار أساسيات الذكاء الاصطناعي وتعلم الآلة",
+                        pointers: [
+                            "فهم الفارق بين التعلم الخاضع للإشراف (Supervised Learning)، التعلم غير الخاضع للإشراف (Unsupervised)، والتعلم التعزيزي (Reinforcement).",
+                            "مفهوم معالجة اللغات الطبيعية (NLP) والرؤية الحاسوبية وقدرات الشبكات العصبية العميقة."
+                        ]
+                    },
+                    {
+                        title: "معيار البيانات الضخمة وإنترنت الأشياء (IoT)",
+                        pointers: [
+                            "استخدام المستشعرات (Sensors) والمشغلات وآليات الحوسبة الطرفية لتحقيق الاتصال الذكي.",
+                            "خصائص البيانات الضخمة (Big Data) من حيث الحجم (Volume) والسرعة (Velocity) والتنوع (Variety)."
+                        ]
+                    }
+                ]
+            },
+            6: {
+                title: "المجال السادس: طرق واستراتيجيات تدريس الحاسب الآلي",
+                description: "المجال التربوي الخاص بالمعلم؛ لتعزيز وتطبيق طرق التعليم الحديثة، وتيسير المفاهيم البرمجية الصعبة للطلاب بكفاءة عالية.",
+                standards: [
+                    {
+                        title: "معيار استراتيجيات التدريس المتمركزة حول الطالب",
+                        pointers: [
+                            "استراتيجية حل المشكلات والتعلم القائم على المشاريع (Project-Based Learning).",
+                            "توظيف استراتيجيات المحاكاة والترميز كمدخل ممتع لتنمية مهارات حل المسائل الحسابية."
+                        ]
+                    },
+                    {
+                        title: "معيار التفكير الحاسوبي (Computational Thinking)",
+                        pointers: [
+                            "المبادئ الأربعة للتفكير الحاسوبي: التفكيك (Decomposition)، التعرف على الأنماط (Pattern Recognition)، التجريد (Abstraction)، وتصميم الخوارزميات.",
+                            "تصميم أنشطة لا صفية تدعم بناء فكر حاسوبي يرتكز على حل المشكلات بأسلوب بنائي متين."
+                        ]
+                    }
+                ]
+            }
+        };
+
+        function selectField(id) {
+            // Update sidebar selected styles
+            document.querySelectorAll('.field-tab').forEach(tab => {
+                tab.className = "field-tab flex-shrink-0 flex items-center gap-3 p-3 rounded-xl bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-semibold hover:bg-slate-100 dark:hover:bg-slate-700 w-full text-right transition-all";
+            });
+            const activeBtn = document.getElementById(`side-tab-${id}`);
+            if(activeBtn) {
+                activeBtn.className = "field-tab flex-shrink-0 flex items-center gap-3 p-3 rounded-xl bg-brand-500 text-white font-bold w-full text-right transition-all shadow-md";
+            }
+
+            // Load Content dynamically
+            const field = fieldsDatabase[id];
+            const contentBox = document.getElementById('field-content-box');
+            
+            let standardsHtml = "";
+            field.standards.forEach((std, i) => {
+                let pointerList = "";
+                std.pointers.forEach(pt => {
+                    pointerList += `
+                    <li class="flex items-start gap-3">
+                        <span class="text-brand-500 mt-1 flex-shrink-0"><i data-lucide="check-circle-2" class="w-5 h-5"></i></span>
+                        <p class="text-sm text-slate-700 dark:text-slate-300">${pt}</p>
+                    </li>`;
+                });
+
+                let diagramHtml = std.diagram ? `<div class="mt-6">${std.diagram}</div>` : "";
+
+                standardsHtml += `
+                <div class="space-y-4 p-6 bg-slate-50 dark:bg-slate-900/60 rounded-2xl border border-slate-100 dark:border-slate-800 animate-fade-in">
+                    <div class="flex items-center gap-3">
+                        <span class="w-8 h-8 bg-brand-500 text-white font-extrabold flex items-center justify-center rounded-lg text-sm">${i+1}</span>
+                        <h3 class="text-base sm:text-lg font-extrabold text-slate-950 dark:text-white">${std.title}</h3>
+                    </div>
+                    <ul class="space-y-3 pl-2 pr-2">
+                        ${pointerList}
+                    </ul>
+                    ${diagramHtml}
+                </div>`;
+            });
+
+            contentBox.innerHTML = `
+                <div class="space-y-2 border-b border-slate-100 dark:border-slate-700 pb-4">
+                    <span class="text-xs font-bold text-brand-500 tracking-widest uppercase">شرح معايير التخصص</span>
+                    <h2 class="text-2xl font-black text-slate-900 dark:text-white">${field.title}</h2>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">${field.description}</p>
+                </div>
+                <div class="space-y-6">
+                    ${standardsHtml}
+                </div>`;
+
+            lucide.createIcons();
+        }
+
+        // Default open field 1
+        selectField(1);
+
+        // --- LOGIC GATE SIMULATOR ENGINE ---
+        let inputState = { A: 0, B: 0 };
+
+        function toggleInput(node) {
+            inputState[node] = inputState[node] === 0 ? 1 : 0;
+            document.getElementById(`btn-input-${node}`).textContent = inputState[node];
+            if(inputState[node] === 1) {
+                document.getElementById(`btn-input-${node}`).className = "px-4 py-1.5 bg-brand-500 text-white font-black rounded-lg transition-all hover:scale-105 shadow-md";
+            } else {
+                document.getElementById(`btn-input-${node}`).className = "px-4 py-1.5 bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-white font-black rounded-lg transition-all hover:scale-105";
+            }
+            runSimulation();
+        }
+
+        function runSimulation() {
+            const gate = document.getElementById('gate-select').value;
+            const nodeA = document.getElementById('sim-node-A');
+            const nodeB = document.getElementById('sim-node-B');
+            const nodeBContainer = document.getElementById('sim-node-B-container');
+            const nodeOut = document.getElementById('sim-node-out');
+            const inputBWrapper = document.getElementById('input-B-wrapper');
+            const gateIconText = document.getElementById('gate-icon-text');
+
+            // Set gate name in visualizer
+            gateIconText.textContent = gate;
+
+            // Handle single inputs for NOT Gate
+            if(gate === "NOT") {
+                inputBWrapper.style.opacity = "0.3";
+                inputBWrapper.style.pointerEvents = "none";
+                nodeBContainer.style.opacity = "0";
+            } else {
+                inputBWrapper.style.opacity = "1";
+                inputBWrapper.style.pointerEvents = "auto";
+                nodeBContainer.style.opacity = "1";
+            }
+
+            // Update visual state of inputs
+            nodeA.textContent = inputState.A;
+            nodeA.className = inputState.A === 1 
+                ? "w-12 h-12 rounded-full border-4 border-brand-500 bg-brand-500/20 text-brand-400 font-extrabold flex items-center justify-center transition-all duration-300 shadow-lg shadow-brand-500/20"
+                : "w-12 h-12 rounded-full border-4 border-slate-600 bg-slate-800 text-white font-extrabold flex items-center justify-center transition-all duration-300";
+
+            nodeB.textContent = inputState.B;
+            nodeB.className = inputState.B === 1 
+                ? "w-12 h-12 rounded-full border-4 border-brand-500 bg-brand-500/20 text-brand-400 font-extrabold flex items-center justify-center transition-all duration-300 shadow-lg shadow-brand-500/20"
+                : "w-12 h-12 rounded-full border-4 border-slate-600 bg-slate-800 text-white font-extrabold flex items-center justify-center transition-all duration-300";
+
+            // Process calculation
+            let result = 0;
+            const a = inputState.A;
+            const b = inputState.B;
+
+            switch (gate) {
+                case "AND": result = a && b; break;
+                case "OR": result = a || b; break;
+                case "XOR": result = a ^ b; break;
+                case "NAND": result = !(a && b) ? 1 : 0; break;
+                case "NOR": result = !(a || b) ? 1 : 0; break;
+                case "NOT": result = !a ? 1 : 0; break;
+            }
+
+            // Update output node styling
+            nodeOut.textContent = result;
+            if(result === 1) {
+                nodeOut.className = "w-16 h-16 rounded-full border-4 border-teal-400 bg-teal-500/20 text-teal-400 font-black text-xl flex items-center justify-center transition-all duration-300 shadow-xl shadow-teal-500/30 animate-pulse";
+            } else {
+                nodeOut.className = "w-16 h-16 rounded-full border-4 border-slate-700 bg-slate-800 text-slate-500 font-black text-xl flex items-center justify-center transition-all duration-300";
+            }
+
+            generateTruthTable(gate, a, b);
+        }
+
+        function generateTruthTable(gate, currentA, currentB) {
+            const tableBody = document.getElementById('truth-table-body');
+            let combinations = [];
+
+            if (gate === "NOT") {
+                combinations = [
+                    { a: 0, b: "-", out: 1 },
+                    { a: 1, b: "-", out: 0 }
+                ];
+            } else {
+                combinations = [
+                    { a: 0, b: 0, out: getGateOutput(gate, 0, 0) },
+                    { a: 0, b: 1, out: getGateOutput(gate, 0, 1) },
+                    { a: 1, b: 0, out: getGateOutput(gate, 1, 0) },
+                    { a: 1, b: 1, out: getGateOutput(gate, 1, 1) }
+                ];
+            }
+
+            let html = "";
+            combinations.forEach(row => {
+                const isActive = (gate === "NOT") 
+                    ? (row.a === currentA)
+                    : (row.a === currentA && row.b === currentB);
+
+                const activeRowClass = isActive 
+                    ? "bg-brand-500/10 dark:bg-brand-500/20 border-l-4 border-brand-500 font-black text-brand-600 dark:text-brand-400" 
+                    : "hover:bg-slate-100 dark:hover:bg-slate-800/40";
+
+                const badgeText = isActive ? '<span class="px-2 py-0.5 bg-brand-500 text-white rounded-md text-[10px] font-bold">نشط حالياً</span>' : '<span class="text-slate-300 dark:text-slate-600">-</span>';
+
+                html += `
+                <tr class="border-b border-slate-100 dark:border-slate-800 transition-colors ${activeRowClass}">
+                    <td class="p-3">${row.a}</td>
+                    <td class="p-3">${row.b}</td>
+                    <td class="p-3 font-extrabold text-base">${row.out}</td>
+                    <td class="p-3">${badgeText}</td>
+                </tr>`;
+            });
+
+            tableBody.innerHTML = html;
+        }
+
+        function getGateOutput(gate, a, b) {
+            switch (gate) {
+                case "AND": return a && b;
+                case "OR": return a || b;
+                case "XOR": return a ^ b;
+                case "NAND": return !(a && b) ? 1 : 0;
+                case "NOR": return !(a || b) ? 1 : 0;
+                case "NOT": return !a ? 1 : 0;
+            }
+        }
+
+        // --- INTEGRATED QUIZ SYSTEM ---
+        const quizData = [
+            {
+                category: "المجال الأول: بنية الحاسب والمنطق",
+                question: "إذا كانت مداخل بوابة NOR هي (A = 1) و (B = 0)، فما هو الناتج النهائي للبوابة؟",
+                options: [
+                    "1 (صواب)",
+                    "0 (خطأ)",
+                    "قيمة غير معرفة",
+                    "نبضة فارغة"
+                ],
+                correct: 1,
+                desc: "بوابة NOR تعبر عن نفي عملية OR. عملية الجمع المنطقي (1 OR 0 = 1)، وعند نفي الناتج بـ NOT نحصل على 0."
+            },
+            {
+                category: "المجال الثاني: شبكات وأمن المعلومات",
+                question: "أي طبقة من طبقات نموذج الاتصال المفتوح OSI مسؤولة عن التوجيه المنطقي للمسارات وإسناد عناوين الـ IP لحزم البيانات؟",
+                options: [
+                    "طبقة ربط البيانات (Data Link Layer)",
+                    "طبقة النقل (Transport Layer)",
+                    "طبقة الشبكة (Network Layer)",
+                    "طبقة التطبيقات (Application Layer)"
+                ],
+                correct: 2,
+                desc: "طبقة الشبكة هي الطبقة الثالثة والمسؤولة عن العنونة المنطقية وتوجيه الحزم (Routing) مستخدمة بروتوكول IP."
+            },
+            {
+                category: "المجال الثالث: البرمجة وهياكل البيانات",
+                question: "تتبع الكود التالي بلغة بايثون، ما هي القيمة النهائية المخرجة للمتغير y؟",
+                code: "def process(x):\n    if x < 1: return 1\n    return x * process(x - 1)\n\ny = process(3)",
+                options: [
+                    "3",
+                    "6",
+                    "9",
+                    "1"
+                ],
+                correct: 1,
+                desc: "الدالة العودية المعطاة تقوم بحساب مفكوك العدد (Factorial). القيمة المدخلة 3 ستحسب كالتالي: 3 * 2 * 1 * 1 = 6."
+            },
+            {
+                category: "المجال الرابع: قواعد البيانات وتحليل النظم",
+                question: "تُعرف عملية تفادي تكرار البيانات وحماية قواعد البيانات من مشكلات الإدخال والتحديث والحذف باسم:",
+                options: [
+                    "الربط الخارجي (Outer Join)",
+                    "عملية التسوية (Normalization)",
+                    "المفتاح الأساسي الفائق (Super Key)",
+                    "هيكلة التحميل الكائنية"
+                ],
+                correct: 1,
+                desc: "عملية التسوية (Normalization) تهدف إلى تنظيم وتفكيك الجداول لتقليص حجم البيانات المكررة لأدنى مستوى وحفظ سلامة العلاقات."
+            },
+            {
+                category: "المجال الخامس: الذكاء الاصطناعي",
+                question: "عند تدريب نموذج ذكاء اصطناعي يعتمد على بيانات مصنفة مسبقاً (Labeled Data)، فإن نوع التعلم يسمى:",
+                options: [
+                    "تعلم غير خاضع للإشراف (Unsupervised)",
+                    "تعلم معزز (Reinforcement)",
+                    "تعلم خاضع للإشراف (Supervised)",
+                    "التعلم العاطفي التقني"
+                ],
+                correct: 2,
+                desc: "التعلم الخاضع للإشراف (Supervised Learning) يعتمد بالكامل على وجود تسمية وتصنيف جاهز لبيانات التدريب والتحقق."
+            },
+            {
+                category: "المجال السادس: طرق التدريس",
+                question: "يقسم المعلم طلابه لأربع مجموعات، لابتكار وبناء تطبيق لحساب كتلة الجسم مع توثيق دور كل طالب. هذه الطريقة تتبع استراتيجية التدريس بنموذج:",
+                options: [
+                    "التعليم القائم على المشاريع (PBL)",
+                    "المحاضرة التقليدية المباشرة",
+                    "التعليم الفردي الصامت",
+                    "العصف الذهني غير الموجه"
+                ],
+                correct: 0,
+                desc: "التعلم القائم على المشاريع يحث الطلاب على التعاون المشترك لحل قضايا من الحياة وتصميم منتج ذو فائدة ملموسة."
+            },
+            {
+                category: "المجال الأول: بنية الحاسب وأنظمة التشغيل",
+                question: "في خوارزمية جدولة المعالجات Round Robin، ما هو العامل الحاسم والمسؤول عن جدولة المهام بعدالة تامة؟",
+                options: [
+                    "الأولوية المباشرة (Priority Value)",
+                    "الحصة أو الشريحة الزمنية (Time Quantum)",
+                    "حجم البرنامج على القرص",
+                    "سرعة مروحة التبريد"
+                ],
+                correct: 1,
+                desc: "خوارزمية Round Robin تخصص حصة زمنية محددة بالتساوي (Time Quantum) لكل عملية للتنفيذ على وحدة المعالجة المركزية بالتبادل الممنهج."
+            },
+            {
+                category: "المجال الثاني: أمن المعلومات",
+                question: "التشفير غير المتماثل (Asymmetric Encryption) يتطلب بالضرورة استخدام:",
+                options: [
+                    "مفتاح سري مشترك واحد للتشفير وفك التشفير",
+                    "زوج من المفاتيح (مفتاح عام ومفتاح خاص)",
+                    "معالجين فائقين في نفس الوقت للاتصال الهاتفي",
+                    "بروتوكول البلوتوث الآمن فقط"
+                ],
+                correct: 1,
+                desc: "يعتمد التشفير غير المتماثل على مفتاحين: العام يشفر به أي مستخدم، والخاص المترابط معه مخصص لصاحب السيرفر لفك الشفرة والتحقق."
+            },
+            {
+                category: "المجال الثالث: البرمجة وقواعد البيانات",
+                question: "ما هو أسوأ تعقيد زمني (Worst-case Time Complexity) للبحث الخطي (Linear Search) في مصفوفة عشوائية حجمها N؟",
+                options: [
+                    "O(1)",
+                    "O(log N)",
+                    "O(N)",
+                    "O(N²)"
+                ],
+                correct: 2,
+                desc: "في البحث الخطي، قد يتطلب الأمر تصفح جميع عناصر المصفوفة حتى الأخير، مما يعني أن التعقيد يتناسب طردياً مع حجم المدخلات أي O(N)."
+            },
+            {
+                category: "المجال السادس: طرق التدريس والتفكير الحاسوبي",
+                question: "عند قيام الطالب بتجريد تفاصيل الكود والتركيز على الخصائص العامة للمشكلة البرمجية، فهو يمارس مهارة:",
+                options: [
+                    "التجريد (Abstraction)",
+                    "التفكيك (Decomposition)",
+                    "التعرف على الأنماط (Pattern Recognition)",
+                    "التنفيذ العشوائي"
+                ],
+                correct: 0,
+                desc: "التجريد (Abstraction) هو أحد ركائز التفكير الحاسوبي ويعني استبعاد التفاصيل غير الضرورية والتركيز على ما يخدم الحل العام فقط."
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let selectedOption = null;
+
+        function startQuiz() {
+            document.getElementById('quiz-screen-start').classList.add('hidden');
+            document.getElementById('quiz-screen-results').classList.add('hidden');
+            document.getElementById('quiz-screen-active').classList.remove('hidden');
+            currentQuestionIndex = 0;
+            score = 0;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            selectedOption = null;
+            document.getElementById('btn-next-question').classList.add('hidden');
+            document.getElementById('quiz-feedback').classList.add('hidden');
+
+            const q = quizData[currentQuestionIndex];
+            
+            // Progress Update
+            document.getElementById('quiz-progress').textContent = `${currentQuestionIndex + 1} / ${quizData.length}`;
+            document.getElementById('quiz-score').textContent = `${Math.round((score / quizData.length) * 100)}%`;
+
+            // Setup Badge and Text
+            document.getElementById('quiz-cat-badge').textContent = q.category;
+            document.getElementById('quiz-question-text').textContent = q.question;
+
+            // Handle Code block visualization
+            const codeBlock = document.getElementById('quiz-code-block');
+            if(q.code) {
+                codeBlock.classList.remove('hidden');
+                codeBlock.innerHTML = `<pre class="whitespace-pre-wrap">${q.code}</pre>`;
+            } else {
+                codeBlock.classList.add('hidden');
+            }
+
+            // Options population
+            const grid = document.getElementById('quiz-answers-grid');
+            grid.innerHTML = "";
+            q.options.forEach((opt, index) => {
+                grid.innerHTML += `
+                <button onclick="answerSelected(${index})" id="opt-btn-${index}" class="option-btn text-right p-4 bg-white dark:bg-slate-800 border-2 border-slate-100 dark:border-slate-700 hover:border-brand-500 rounded-xl font-semibold text-sm transition-all flex items-center gap-3">
+                    <span class="w-7 h-7 bg-slate-100 dark:bg-slate-700 text-slate-500 rounded-lg flex items-center justify-center font-bold text-xs">${String.fromCharCode(65 + index)}</span>
+                    ${opt}
+                </button>`;
+            });
+        }
+
+        function answerSelected(index) {
+            if(selectedOption !== null) return; // Prevent dual answering
+
+            selectedOption = index;
+            const q = quizData[currentQuestionIndex];
+            const isCorrect = index === q.correct;
+
+            // Highlight selected button
+            const selectedBtn = document.getElementById(`opt-btn-${index}`);
+            
+            if(isCorrect) {
+                score++;
+                selectedBtn.className = "option-btn text-right p-4 bg-emerald-50 dark:bg-emerald-950/20 border-2 border-emerald-500 text-emerald-600 dark:text-emerald-400 rounded-xl font-bold text-sm transition-all flex items-center gap-3";
+                document.getElementById('feedback-icon').textContent = "✅";
+                document.getElementById('feedback-title').textContent = "إجابة صحيحة ورائعة!";
+            } else {
+                selectedBtn.className = "option-btn text-right p-4 bg-rose-50 dark:bg-rose-950/20 border-2 border-rose-500 text-rose-600 dark:text-rose-400 rounded-xl font-bold text-sm transition-all flex items-center gap-3";
+                // Highlight real correct button
+                const correctBtn = document.getElementById(`opt-btn-${q.correct}`);
+                correctBtn.className = "option-btn text-right p-4 bg-emerald-50 dark:bg-emerald-950/20 border-2 border-emerald-500 text-emerald-600 dark:text-emerald-400 rounded-xl font-bold text-sm transition-all flex items-center gap-3";
+                
+                document.getElementById('feedback-icon').textContent = "❌";
+                document.getElementById('feedback-title').textContent = "إجابة خاطئة - للتوضيح والتعلم:";
+            }
+
+            // Reveal explanation
+            const feedbackBox = document.getElementById('quiz-feedback');
+            feedbackBox.classList.remove('hidden');
+            document.getElementById('feedback-desc').textContent = q.desc;
+
+            // Show next button
+            document.getElementById('btn-next-question').classList.remove('hidden');
+            document.getElementById('quiz-score').textContent = `${Math.round((score / quizData.length) * 100)}%`;
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if(currentQuestionIndex < quizData.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quiz-screen-active').classList.add('hidden');
+            const resultScreen = document.getElementById('quiz-screen-results');
+            resultScreen.classList.remove('hidden');
+
+            const scoreText = document.getElementById('results-score-text');
+            const finalPercent = Math.round((score / quizData.length) * 100);
+            scoreText.textContent = `${score} / ${quizData.length} (${finalPercent}%)`;
+
+            const iconDiv = document.getElementById('result-visual-icon');
+            const title = document.getElementById('results-feedback-title');
+
+            if(finalPercent >= 80) {
+                iconDiv.className = "w-24 h-24 bg-teal-500 text-white rounded-full flex items-center justify-center mx-auto shadow-lg";
+                iconDiv.innerHTML = '<i data-lucide="award" class="w-12 h-12"></i>';
+                title.textContent = "تهانينا! مستواك رائع جداً ومؤهل بقوة لاجتياز اختبار الرخصة بدرجة خبير.";
+            } else if(finalPercent >= 60) {
+                iconDiv.className = "w-24 h-24 bg-amber-500 text-white rounded-full flex items-center justify-center mx-auto shadow-lg";
+                iconDiv.innerHTML = '<i data-lucide="check" class="w-12 h-12"></i>';
+                title.textContent = "جيد جداً! أنت قريب جداً، نوصيك بمراجعة الشروحات والتركيز على البوابات المنطقية لتجاوز الـ 80%.";
+            } else {
+                iconDiv.className = "w-24 h-24 bg-rose-500 text-white rounded-full flex items-center justify-center mx-auto shadow-lg";
+                iconDiv.innerHTML = '<i data-lucide="alert-circle" class="w-12 h-12"></i>';
+                title.textContent = "أنت بحاجة للمزيد من الجهد والمذاكرة. تصفح المعايير بالتفصيل وحاول مرة أخرى.";
+            }
+            lucide.createIcons();
+        }
+
+        // Initialize Lucide Icons on DOM Load
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>
